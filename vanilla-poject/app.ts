@@ -7,7 +7,7 @@ let todos: { id: number, text: string }[] = [
 
 displayTodos();
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', (e: Event) => {
     e.preventDefault();
     let data: FormData = new FormData(form);
     todos.push({
@@ -18,6 +18,25 @@ form.addEventListener('submit', (e) => {
     displayTodos();
 })
 
+function addListeners(): void {
+    let btns = document.querySelectorAll('button.btn-danger');
+
+    btns.forEach(btn => {
+
+        btn.addEventListener('click', (e: Event) => {
+            console.log('object')
+            let id = btn.getAttribute('data-id');
+            console.log(id)
+            todos.filter((todo) => {
+                console.log(todo.id.toString()=== id.toString());
+                return todo.id.toString() !== id.toString();
+            })
+            console.log(todos);
+            displayTodos();
+        })
+    })
+}
+
 function displayTodos(): void {
     testContainer.innerHTML = '';
 
@@ -27,9 +46,10 @@ function displayTodos(): void {
         div.innerHTML = `
             <div className="card-body">
                 ${ todo.text }
-                <button class="btn btn-danger">x</button>
+                <button data-id="${ todo.id }" class="btn btn-danger">x</button>
             </div>
         `;
         testContainer.appendChild(div);
     })
+    addListeners();
 }
