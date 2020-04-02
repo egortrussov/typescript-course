@@ -18,6 +18,10 @@ var TodoList = /** @class */ (function () {
     TodoList.prototype.allTodoItems = function () {
         return this.allTodos;
     };
+    TodoList.prototype.deleteItem = function (id) {
+        this.allTodos.splice(id, 1);
+        return this.allTodos;
+    };
     return TodoList;
 }());
 var todoList = new TodoList;
@@ -27,5 +31,9 @@ window.onload = function () {
     document.getElementById("add").addEventListener('click', function () {
         todoList.createTodoItem(name.value, description.value);
         console.log(todoList.allTodoItems());
+    });
+    document.getElementById('delete').addEventListener('click', function () {
+        var id = document.getElementById('deleteTodo');
+        console.log(todoList.deleteItem(id));
     });
 };

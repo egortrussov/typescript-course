@@ -28,6 +28,11 @@ class TodoList {
     allTodoItems(): Todo[] {
         return this.allTodos;
     }
+
+    deleteItem(id): Todo[] {
+        this.allTodos.splice(id, 1);
+        return this.allTodos;
+    }
 }
 
 let todoList = new TodoList;
@@ -41,4 +46,9 @@ window.onload = function(){
         todoList.createTodoItem(name.value, description.value);
         console.log(todoList.allTodoItems());
       }); 
+    
+    document.getElementById('delete').addEventListener('click', () => {
+        let id = <HTMLInputElement> document.getElementById('deleteTodo');
+        console.log(todoList.deleteItem(id));
+    })
 }
