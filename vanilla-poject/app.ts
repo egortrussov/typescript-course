@@ -17,7 +17,7 @@ form.addEventListener('submit', (e: Event) => {
     data.set('name', '');
     displayTodos();
 })
-
+ 
 function addListeners(): void {
     let btns = document.querySelectorAll('button.btn-danger');
 
