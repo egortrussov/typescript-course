@@ -11,7 +11,9 @@ export default class App extends Component {
 
     state = {
         user: null,
-        repos: null
+        repos: null,
+        commits: null,
+        grid: null
     }
 
     componentDidMount() {
@@ -30,34 +32,79 @@ export default class App extends Component {
             .repos({
                 perPage: 300
             })
-            .then((repos) => {
-                let url = repos.list[0].commits_url;
-                
-                console.log(repos)
-
-                let repo = client.repo(repos.list[0].full_name);
-                console.log(repo)
-                repo.info()  
-                    .then(infos => {
-                        console.log(infos)
-                    })
-                repo.commits()
-                    .then(commits => {
-                        console.log(commits)
-                    })
-                let commit = repo.commit('29cc3ada05826c8a754f624973a1a26d013c9593');
-                commit.info().then(inn => console.log(inn))
+            .then((repos) => {                
+                this.setState({
+                    ...this.state,
+                    repos
+                })
             })
+            .then(() => {
+                let { repos, user } = this.state;
+                let username = user.login;
 
+                let grid = new Array(12);
+                for (let i = 0; i < 12; i++) {
+                    grid[i] = new Array(31);
+                    for (let j = 0; j < 31; j++) grid[i][j] = 0;
+                }
+                    
+                
+
+                repos.list.forEach(repo => {
+                    client.get(`/repos/${ username }/${ repo.name }/commits`) 
+                        .then(commits => {
+                            let body = commits.body;
+                            body.forEach(commit => {
+                                let date = commit.commit.author.date;
+                                let dateF = new Date(date);
+                                let y = dateF.getFullYear();
+                                if (y > 2019) {
+                                    let m = dateF.getMonth();
+                                    let d = dateF.getDate();
+                                    if (typeof grid[m - 1][d - 1] === 'undefined') 
+                                        grid[m - 1][d - 1] = 1;
+                                    else grid[m - 1][d - 1]++;
+                                } 
+                            })
+                        })
+                })
+
+                console.log(grid)
+
+                this.setState({
+                    ...this.state,
+                    grid
+                }, () => console.log(grid))
+
+            }) 
+            .then(() => {
+                console.log(this.state)
+                this.forceUpdate()
+            })
+        
     }
     
 
     render() {
-        const { user } = this.state;
+        const { user, grid } = this.state;
 
-        if (!user) return (
+        if (!user || !grid) return (
             <h3>Loading...</h3>
         )
+
+        console.log(grid)
+
+        let blocks = document.createElement('div');
+
+        for (let i = 0; i < 12; i++) {
+            for (let j = 0; j <= 30; j++) {
+                let span = document.createElement('span');
+                span.innerText = grid[i][j];
+                blocks.appendChild(span)
+            } 
+        }
+
+        console.log(blocks)
 
         return (
             <div>
