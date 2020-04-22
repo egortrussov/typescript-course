@@ -1,7 +1,10 @@
 const express = require('express')
 const multer = require('multer')
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors());
 
 const storage = multer.diskStorage({
     destination: (req, res, cb) => {
@@ -15,13 +18,13 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage
-})
+}) 
 
 app.post('/upload', upload.single('photo'), (req, res) => {
     if (req.file) {
-        
+        res.json({ text: 'Success!' })
     } else {
-        res.send('No file!')
+        res.json({ text: 'Error' })
     }
 })
 
