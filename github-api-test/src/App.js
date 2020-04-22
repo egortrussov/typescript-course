@@ -42,10 +42,9 @@ export default class App extends Component {
                 let { repos, user } = this.state;
                 let username = user.login;
 
-                let grid = new Array(12);
-                for (let i = 0; i < 12; i++) {
-                    grid[i] = new Array(31);
-                    for (let j = 0; j < 31; j++) grid[i][j] = 0;
+                let grid = [];
+                for (let i = 0; i < 12 * 31; i++) {
+                    grid.push(0)
                 }
                     
                 
@@ -61,20 +60,18 @@ export default class App extends Component {
                                 if (y > 2019) {
                                     let m = dateF.getMonth();
                                     let d = dateF.getDate();
-                                    if (typeof grid[m - 1][d - 1] === 'undefined') 
-                                        grid[m - 1][d - 1] = 1;
-                                    else grid[m - 1][d - 1]++;
+                                    grid[(m - 1) * 31 + d]++;
                                 } 
                             })
                         })
                 })
 
-                console.log(grid)
+                console.log(grid[3])
 
                 this.setState({
                     ...this.state,
                     grid
-                }, () => console.log(grid))
+                }, () => console.log(grid === this.state.grid))
 
             }) 
             .then(() => {
@@ -92,24 +89,24 @@ export default class App extends Component {
             <h3>Loading...</h3>
         )
 
+        let ln = 0;
         console.log(grid)
+        console.log(ln, grid[1]);
 
         let blocks = document.createElement('div');
-
-        for (let i = 0; i < 12; i++) {
-            for (let j = 0; j <= 30; j++) {
-                let span = document.createElement('span');
-                span.innerText = grid[i][j];
-                blocks.appendChild(span)
-            } 
-        }
 
         console.log(blocks)
 
         return (
             <div>
                 { user.login }
-                <img src={ user.avatar_url } alt=""/>
+                {
+                    grid.map(i => {
+                        return (
+                            <span>{ i }</span>
+                        )
+                    })
+                }
             </div>
         )
     }
