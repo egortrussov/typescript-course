@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.video-box {
+    width: 100vw;
+    height: 100vh !important;
+    position: relative;
+    background-color: #000;
+
+    video {
+        height: 100% !important;
+        min-height: 100% !important;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .controls {
+        position: absolute;
+        bottom: 0;
+        top: auto;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        padding: 20px;
+    }
+}
