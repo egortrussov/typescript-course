@@ -1,0 +1,16 @@
+.board > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.board > div .node {
+  width: 15px;
+  height: 15px;
+  border: 1px solid silver;
+}
+
+.board > div .node.mine {
+  background-color: red;
+}
+/*# sourceMappingURL=style.css.map */

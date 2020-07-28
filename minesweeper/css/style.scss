@@ -1,0 +1,16 @@
+.board {
+
+    &>div {
+        display: flex;
+
+        .node {
+            width: 15px;
+            height: 15px;
+            border: 1px solid silver;
+
+            &.mine {
+                background-color: red;
+            }
+        }
+    }
+}
