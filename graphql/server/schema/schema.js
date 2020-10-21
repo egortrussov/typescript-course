@@ -67,6 +67,19 @@ const RootQuery = new GraphQLObjectType({
             resolve(parent, args) {
                 return authors.find(author => author.id == args.id);
             }
+        },
+        books: {
+            type: new graphql.GraphQLList(BookType),
+            args: {
+                genre: { type: graphql.GraphQLString, defaultValue: null },
+                authorId: { type: graphql.GraphQLID, defaultValue: null }
+            },
+            resolve(parent, args) {
+                if (args.genre) {
+                    return books.filter(book => book.genre.toLowerCase() === args.genre.toLowerCase())
+                }
+                return books.filter(book => book.authorId === args.authorId)
+            }
         }
     }
 })
