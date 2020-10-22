@@ -29,7 +29,7 @@ const BookType = new GraphQLObjectType({
         author: {
             type: AuthorType,
             resolve(parent, args) {
-                return authors.find(author => author.id == parent.authorId);
+                return Author.findOne({ _id: parent.authorId })
             }
         }
     })
@@ -44,7 +44,7 @@ const AuthorType = new GraphQLObjectType({
         books: {
             type: new graphql.GraphQLList(BookType),
             resolve(parent, args) {
-                return books.filter(book => book.authorId === parent.id)
+                return Book.find({ authorId: parent.id })
             }
         }
     })
@@ -59,7 +59,7 @@ const RootQuery = new GraphQLObjectType({
                 id: { type: graphql.GraphQLID }
             },
             resolve(parent, args) {
-                return books.find(book => book.id == args.id);
+                return Book.findOne({ _id: args.id })
             }
         },
         author: {
@@ -68,20 +68,18 @@ const RootQuery = new GraphQLObjectType({
                 id: { type: graphql.GraphQLID }
             },
             resolve(parent, args) {
-                return authors.find(author => author.id == args.id);
+                return Author.findOne({ _id: args.id })
             }
         },
-        books: {
+        books: { 
             type: new graphql.GraphQLList(BookType),
             args: {
                 genre: { type: graphql.GraphQLString, defaultValue: null },
                 authorId: { type: graphql.GraphQLID, defaultValue: null }
             },
             resolve(parent, args) {
-                if (args.genre) {
-                    return books.filter(book => book.genre.toLowerCase() === args.genre.toLowerCase())
-                }
-                return books.filter(book => book.authorId === args.authorId)
+                Book.find({}).then(res => console.log(res))
+                return Book.find({})
             }
         }
     }
@@ -109,7 +107,7 @@ const Mutation = new GraphQLObjectType({
             }
         },
         addBook: {
-            type: Book,
+            type: BookType,
             args: {
                 name: {  
                     type: graphql.GraphQLString
