@@ -1,0 +1,11 @@
+canvas#canv {
+  display: block;
+  image-rendering: crisp-edges;
+  min-height: 500px;
+  max-height: 500px;
+}
+
+input[type="range"] {
+  width: 350px;
+}
+/*# sourceMappingURL=style.css.map */

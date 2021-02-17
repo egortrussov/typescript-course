@@ -1,50 +1,19 @@
 const imgForm = document.querySelector('#image-form');
-const preview = document.querySelector('#preview')
 const canv = document.querySelector('#canv');
 const rangeInput = document.querySelector('#pixelate-value');
+const generateBtn = document.querySelector('#generate');
+
+const { loadImgToCanvas } = require('./loadImageToCanvas/loadImageToCanvas');
+const { createTextParsedImage } = require('./createTextParsedImage/createTextParsedImage');
 
 let ctx = canv.getContext('2d');
 
-ctx.imageSmoothingEnabled =false;
-ctx.webkitImageSmoothingEnabled = false;
-ctx.mozImageSmoothingEnabled = false;
-
-let img = new Image;
-let src = '';
-
-function loadImgToCanvas(value) {
-
-    img.onload = function() {
-        // console.log(img)
-        var fw = (img.width / value)|0,
-            fh = (img.height / value)|0;
-
-        let newHeight = img.height / (img.width / 500);
-        
-        // img.width = 500;
-        // img.height = Math.round(newHeight);
-
-        
-
-        var oc = document.createElement('canvas'),
-        octx = oc.getContext('2d');
-
-        console.log(img)
-        // ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingEnabled = false;
-        canv.width = 500;
-        canv.height = newHeight
-        ctx.drawImage(img, 0, 0,  fw, fh);
-        ctx.imageSmoothingEnabled = false;
-        // ctx.width = 500;
-        // ctx.height = 500;
-
-        ctx.drawImage(canv, 0, 0, fw, fh, 0, 0, 500, newHeight);
-        ctx.imageSmoothingEnabled = false;
-    }
-
-    img.src = src
+let value = 100;
+let pixelsData = { 
+    fw: canv.width, 
+    fh: canv.height 
 }
+let src = null;
 
 imgForm.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -58,11 +27,9 @@ imgForm.addEventListener('submit', (e) => {
     const reader = new FileReader();
 
     reader.onloadend = function () {
-        // preview.src = reader.result;
-
         src = reader.result;
 
-        loadImgToCanvas(20)
+        loadImgToCanvas(canv, ctx, src, value)
     }
 
     reader.readAsDataURL(input);
@@ -70,6 +37,13 @@ imgForm.addEventListener('submit', (e) => {
 
 rangeInput.addEventListener("change", (e) => {
     let val = e.target.value;
-    console.log(val)
-    loadImgToCanvas(val)
+
+    value = val;
+
+    pixelsData = loadImgToCanvas(canv, ctx, src, val);
+    createTextParsedImage(canv, ctx, src, value);
+})
+
+generateBtn.addEventListener("click", (e) => {
+    let textImage = createTextParsedImage(canv);
 })

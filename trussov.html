@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .container {
+            display: flex;
+        }
+
+        .container table {
+            margin-right: 4rem;
+        }
+
+        .container table td {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        table.ex2 tr.colored {
+            background-color: aqua;
+            font-weight: bold;
+        }
+
+        table.ex2 tr td:nth-child(1) {
+            background-color: aqua;
+            font-weight: bold;
+        }
+
+        table.ex2 td {
+            padding: .3rem;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <table border="2">
+            <tr>
+                <td rowspan="2">
+                    1
+                </td>
+                <td colspan="2">
+                    2
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+        </table>
+
+        <table border="2">
+            <tr>
+                <td colspan="2">1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td colspan="2">4</td>
+            </tr>
+        </table>
+
+        <table border="2">
+            <tr>
+                <td colspan="2">1</td>
+            </tr>
+            <tr>
+                <td rowspan="2">2</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>4</td>
+            </tr>
+
+        </table>
+
+        <table border="2">
+            <tr>
+                <td>1</td>
+                <td rowspan="2">2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td colspan="2">4</td>
+            </tr>
+        </table>
+    </div>
+
+    <table class="ex2" border="2">
+        <tr class="colored">
+            <td></td>
+            <td colspan="2">1 spr</td>
+            <td colspan="3">2 spr</td>
+        </tr>
+        <tr class="colored">
+            <td>type</td>
+            <td>singular</td>
+            <td>plural</td>
+            <td>singular</td>
+            <td>plural</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>u</td>
+            <td>em</td>
+            <td>u</td>
+            <td>im</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>u</td>
+            <td>em</td>
+            <td>u</td>
+            <td>im</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>u</td>
+            <td>em</td>
+            <td>u</td>
+            <td>im</td>
+        </tr>
+        <tr>
+            <td>indefinite</td>
+            <td colspan="2">Lorem ipsum dolor sit amet.</td>
+            <td colspan="2">it</td>
+        </tr>
+        <tr>
+            <td>diff</td>
+            <td colspan="2">at, yat, //</td>
+            <td colspan="2">Lorem ipsum dolor sit amet consectetur adipisicing.</td>
+        </tr>
+    </table>
+
+</body>
+</html>
