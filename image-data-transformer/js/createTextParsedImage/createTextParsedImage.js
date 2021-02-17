@@ -27,7 +27,7 @@ function createTextParsedImage(canv, ctx, src, value) {
         ctx1.drawImage(img, 0, 0,  fw, fh);
         ctx1 = resetCanvasSmoothing(ctx1);
         // document.body.appendChild(virtualCanv)
-        console.log(ctx1.getImageData(0, 0, fw, fh))
+        // console.log()
         // 
 
         let text = createText(virtualCanv, ctx1)
